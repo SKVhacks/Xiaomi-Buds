@@ -1,0 +1,32 @@
+<Window
+    x:Class="XiaomiBuds.Views.IslandWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Xiaomi Buds Popup">
+
+    <Grid x:Name="Root" Background="Transparent" RequestedTheme="Dark">
+        <!-- the island itself -->
+        <Border x:Name="Pill" Background="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"
+                Margin="0,8,0,0" Width="126" Height="36" CornerRadius="18" Opacity="0"/>
+
+        <!-- content laid out in a fixed 440x184 stage, animated per frame -->
+        <Canvas x:Name="Stage" Width="440" Height="184" HorizontalAlignment="Center" VerticalAlignment="Top"
+                Margin="0,8,0,0" Opacity="0" IsHitTestVisible="False">
+            <Grid Width="440" Canvas.Top="16" Padding="26,0">
+                <TextBlock x:Name="NameText" Foreground="White" FontSize="15" FontWeight="SemiBold"
+                           FontFamily="Segoe UI Variable Display"/>
+                <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Ellipse Width="7" Height="7" Fill="#FF30D158" VerticalAlignment="Center"/>
+                    <TextBlock Text="Connected" Foreground="#FF30D158" FontSize="13" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Grid>
+            <Image x:Name="HeroImg" Height="96" Width="220" Canvas.Left="110" Canvas.Top="44" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed"/>
+            <Image x:Name="CaseImg" Height="92" Width="150" Canvas.Left="145" Canvas.Top="46" RenderTransformOrigin="0.5,0.5"/>
+            <Image x:Name="LeftImg" Height="80" Width="100" Canvas.Left="38" Canvas.Top="52" RenderTransformOrigin="0.5,0.5"/>
+            <Image x:Name="RightImg" Height="80" Width="100" Canvas.Left="302" Canvas.Top="52" RenderTransformOrigin="0.5,0.5"/>
+            <Grid x:Name="LeftBatt" Width="120" Canvas.Left="28" Canvas.Top="148"/>
+            <Grid x:Name="CaseBatt" Width="120" Canvas.Left="160" Canvas.Top="148"/>
+            <Grid x:Name="RightBatt" Width="120" Canvas.Left="292" Canvas.Top="148"/>
+        </Canvas>
+    </Grid>
+</Window>

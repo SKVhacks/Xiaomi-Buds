@@ -1,0 +1,11 @@
+# build output
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Xiaomi product photos are copyrighted and are not redistributed.
+# The app downloads them from Xiaomi's site on first use (see Core/ImageStore.cs);
+# local copies placed here are used if present.
+src/XiaomiBuds/Assets/Devices/

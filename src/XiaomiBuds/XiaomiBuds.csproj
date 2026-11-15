@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <RootNamespace>XiaomiBuds</RootNamespace>
+    <AssemblyName>XiaomiBuds</AssemblyName>
+    <Product>Xiaomi Buds</Product>
+    <Company>Gadget Vishwa</Company>
+    <Copyright>Copyright (C) 2026 Gadget Vishwa. AGPL-3.0-or-later.</Copyright>
+    <Version>1.0.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWinUI>true</UseWinUI>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\**\*" Exclude="Assets\Devices\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <!-- optional local copies of Xiaomi photos: used by local builds only, never in a release exe -->
+  <ItemGroup Condition="'$(SingleExe)' != 'true'">
+    <Content Include="Assets\Devices\**\*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <!-- single-file release: dotnet publish -c Release -p:SingleExe=true -->
+  <PropertyGroup Condition="'$(SingleExe)' == 'true'">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <EnableMsixTooling>true</EnableMsixTooling>
+  </PropertyGroup>
+
+  <!-- Never bundle Xiaomi's photos into a release exe (they are downloaded at runtime instead). -->
+  <Target Name="DropXiaomiPhotosFromRelease" AfterTargets="ComputeResolvedFilesToPublishList" Condition="'$(SingleExe)' == 'true'">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
+          Condition="$([System.String]::Copy('%(ResolvedFileToPublish.RelativePath)').Replace('/', '\').StartsWith('Assets\Devices\'))" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.6.5" />
+    <PackageReference Include="WinUIEx" Version="2.9.3" />
+  </ItemGroup>
+
+</Project>
